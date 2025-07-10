@@ -36,8 +36,12 @@ app.get(shopify.config.auth.path, shopify.auth.begin());
 app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
-  shopify.redirectToShopifyOrAppRoot()
+  async (req, res) => {
+    const { shop, host } = req.query;
+    res.redirect(`/?shop=${shop}&host=${host}`);
+  }
 );
+
 app.post(
   shopify.config.webhooks.path,
   shopify.processWebhooks({ webhookHandlers: PrivacyWebhookHandlers })
