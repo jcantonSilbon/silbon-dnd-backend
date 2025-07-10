@@ -19,6 +19,17 @@ const STATIC_PATH =
     : `${process.cwd()}/frontend/`;
 
 const app = express();
+app.get("/", (req, res) => {
+  const { shop } = req.query;
+
+  if (!shop) {
+    return res
+      .status(400)
+      .send("Falta el parámetro ?shop=mi-tienda.myshopify.com");
+  }
+
+  res.redirect(`/auth?shop=${shop}`);
+});
 
 // Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());
