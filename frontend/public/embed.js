@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      await fetch(`https://TU-APP.vercel.app/api/blocks/${id}`, {
+      await fetch(`https://draganddrop-sand.vercel.app/api/blocks/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
