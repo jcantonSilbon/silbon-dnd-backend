@@ -1,8 +1,7 @@
 // @ts-check
-import { join } from "path";
-import { readFileSync } from "fs";
+
 import express from "express";
-import serveStatic from "serve-static";
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -15,10 +14,7 @@ const PORT = parseInt(
   10
 );
 
-const STATIC_PATH =
-  process.env.NODE_ENV === "production"
-    ? `${process.cwd()}/frontend/dist`
-    : `${process.cwd()}/frontend/`;
+
 
 const app = express();
 app.get("/", (req, res) => {
@@ -87,17 +83,6 @@ app.post("/api/products", async (_req, res) => {
 });
 
 app.use(shopify.cspHeaders());
-app.use(serveStatic(STATIC_PATH, { index: false }));
 
-app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
-  return res
-    .status(200)
-    .set("Content-Type", "text/html")
-    .send(
-      readFileSync(join(STATIC_PATH, "index.html"))
-        .toString()
-        .replace("%VITE_SHOPIFY_API_KEY%", process.env.SHOPIFY_API_KEY || "")
-    );
-});
 
 app.listen(PORT);
