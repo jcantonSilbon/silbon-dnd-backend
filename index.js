@@ -36,7 +36,8 @@ app.get(
   shopify.auth.callback(),
   async (req, res) => {
     const { shop, host } = req.query;
-    res.redirect(`/?shop=${shop}&host=${host}`);
+    res.redirect(`https://draganddrop-sand.vercel.app/?shop=${shop}&host=${host}`);
+
   }
 );
 
